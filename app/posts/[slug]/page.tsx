@@ -146,6 +146,7 @@ import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { notFound } from 'next/navigation'
 import NewsletterForm from '@/components/newsletter-form'
 
+// Adjusted generateStaticParams
 export async function generateStaticParams() {
   const posts = await getPosts()
   const slugs = posts.map(post => ({ slug: post.slug }))
@@ -153,20 +154,15 @@ export async function generateStaticParams() {
   return slugs
 }
 
-// Correct typing for Post component
-type PostProps = {
-  params: {
-    slug: string
-  }
-}
+// Adjusted Post function for Next.js v15 breaking change
+type Params = Promise<{ slug: string }> // Update type to promise
 
-// Make sure to treat 'params' as resolved, no 'await' needed
-export default async function Post({ params }: PostProps) {
-  const { slug } = params // Directly destructure 'slug' from 'params'
+export default async function Post({ params }: { params: Params }) {
+  const { slug } = await params // Await params as a promise
   const post = await getPostBySlug(slug)
 
   if (!post) {
-    notFound() // Show 404 if post is not found
+    notFound()
   }
 
   const { metadata, content } = post
