@@ -24,7 +24,8 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
     const { data, content } = matter(fileContent)
     return { metadata: { ...data, slug }, content }
-  } catch (error) {
+  // } catch (error) { removed error
+  } catch {
     return null
   }
 }
