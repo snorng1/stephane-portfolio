@@ -15,7 +15,7 @@ export default function Intro() {
       <div className='relative'>
         <Image
         //   className='flex-1 rounded-lg grayscale'
-          className='flex-1 rounded-lg'
+          className='flex-1 rounded-s-full'
           src={authorImage}
           alt='Stéphane Norng'
           width={250}
